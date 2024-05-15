@@ -1,0 +1,14 @@
+C:\Users\Admin\Documents\GitHub\TBG\bin\Debug\net7.0\TBG.exe
+C:\Users\Admin\Documents\GitHub\TBG\bin\Debug\net7.0\TBG.deps.json
+C:\Users\Admin\Documents\GitHub\TBG\bin\Debug\net7.0\TBG.runtimeconfig.json
+C:\Users\Admin\Documents\GitHub\TBG\bin\Debug\net7.0\TBG.dll
+C:\Users\Admin\Documents\GitHub\TBG\bin\Debug\net7.0\TBG.pdb
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.AssemblyInfo.cs
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.dll
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\refint\TBG.dll
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.pdb
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.genruntimeconfig.cache
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\ref\TBG.dll
