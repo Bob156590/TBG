@@ -12,3 +12,6 @@ C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\refint\TBG.dll
 C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.pdb
 C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\ref\TBG.dll
+C:\Users\Admin\Documents\GitHub\TBG\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.csproj.AssemblyReference.cache
+C:\Users\Admin\Documents\GitHub\TBG\obj\Debug\net7.0\TBG.csproj.CopyComplete

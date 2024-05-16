@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace TBG
 {
     public class Player : IStats
@@ -43,7 +45,7 @@ namespace TBG
         public virtual void TakeDamge(float dmg, string name)
         {
             _hp -= dmg;
-            Console.Write($"The {name} delt {dmg} to you");
+            Console.WriteLine($"The {name} delt {dmg} to you");
         }
     }
 }

@@ -5,10 +5,11 @@ namespace TBG
         public Rat()
         {
             Random rnd = new Random();
-            this._hp = rnd.Next(1, 10);
-            this._dmg = rnd.Next(1, 4);
-            this._attackSpeed = rnd.Next(4000, 6000);
-            this._name = $"Rat";
+            _hp = rnd.Next(1, 10);
+            _dmg = rnd.Next(1, 4);
+            _attackSpeed = rnd.Next(2000, 4000);
+            _name = $"Rat";
+            points = 10;
         }
     }
 }

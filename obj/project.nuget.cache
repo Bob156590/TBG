@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "y5JHXncBdQI8YaTkZL3XAb4lW0Bl2E5hlZlwI8zAFMfbC4+cQBehRkdGF+zINiL9XM3/KLo3Qa9qX2GRebcivw==",
+  "dgSpecHash": "bN+jsbWIl5teyATedtSOQ6jI1Nu4OB02nab03ODvOhMijlmqSo9cV6F5KW2aRmyLG3q6XO0ocLJXkaHHAfaQtQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\TBG\\TBG.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

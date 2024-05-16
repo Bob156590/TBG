@@ -2,34 +2,31 @@
 using System.Globalization;
 using System.Linq.Expressions;
 using TBG;
+using Newtonsoft.Json;
+using System.Drawing;
+using Newtonsoft.Json.Serialization;
+
 bool game = true;
-bool enemyAttakc = false;
 Stopwatch playerSW = new Stopwatch();
-Stopwatch enemySW = new Stopwatch();
 List<Entity> entities = new List<Entity>();
 Player player = new Player();
 entities.Add(new Rat());
-entities.Add(new Rat());
-playerSW.Start();
-enemySW.Start();
+playerSW.Start(); 
+Points points = new Points();
+//string jsonstring = JsonConvert
 while (game)
 {
-    float lastAttack =0;
-    lastAttack += enemySW.ElapsedMilliseconds;
-    if(lastAttack > enemy.AttackSpeed){
-        lastAttack = 0;
-        // attack
-    }
     if(playerSW.Elapsed.Seconds >= player.AttackSpeed) PlayerTurn();
-    foreach(Entity entity in entities) if(enemySW.ElapsedMilliseconds % entity.AttackSpeed == 0 && enemyAttakc == false) EnemyTurn(entity);
+    foreach(Entity entity in entities) entity.CanAttack(player);
 }
 
 void PlayerTurn(){
-    if(entities.Count == 0) return;
+    Wait();
+    if(entities.Count == 0) game = false;
     playerSW.Reset();
-    enemySW.Stop();
+    //enemySW.Stop();
     Console.WriteLine("Whats your next move:");
-    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Stats");
+    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Stats\n5. test");
     try{PlayerMove(int.Parse(Console.ReadLine()));}
     catch
     {
@@ -41,6 +38,7 @@ void PlayerTurn(){
 
 void PlayerMove(int chose)
 {
+
     //Console.Clear();
     switch(chose){
         case 1:
@@ -66,23 +64,25 @@ void PlayerMove(int chose)
             //Console.Clear();
             PlayerTurn();
             break;
+        case 5:
+            points.WriteOutTheScoreboard();
+            break;
         default:
             Console.WriteLine("Pls chose only 1-4");
             PlayerTurn();
             break;
     }
+    Wait(false);
     Check();
-    enemySW.Start();
     playerSW.Start();
 }
 
-void EnemyTurn(Entity entity){
-    enemyAttakc = true;
-    enemySW.Stop();
-    entity.Attack(player);
-    enemySW.Start();
-    Thread.Sleep(3);
-    enemyAttakc = false;
+void Wait(bool stop = true){
+    if (stop)
+    {
+        foreach(Entity entity in entities) entity.Wait();
+    }
+    else foreach(Entity entity in entities) entity.Wait(false);
 }
 
 int Choose()
@@ -99,11 +99,26 @@ void Check()
 {
     for (int i = 0; i < entities.Count; i++)
     {
-        if(entities[i].Hp <= 0) entities.RemoveAt(i);
+        if(entities[i].Hp <= 0)
+        {
+            entities.RemoveAt(i);
+            points.Point += 10;
+        }
+
     }
+    if(entities.Count == 0) game = false;
     if(player.Hp <= 0)
     {
         game = false;
         Console.WriteLine("You Have Died");
     }
+}
+
+if(!game)
+{
+    string name = null;
+    while (name == null) name = Console.ReadLine();
+    points.Name = name; 
+    points.SaveToScoreboard(points);
+    Console.WriteLine($"Game Over\nPoints: {points.Point}");
 }
