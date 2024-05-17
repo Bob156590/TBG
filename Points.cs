@@ -34,8 +34,18 @@ namespace TBG
 
         public void SaveToScoreboard(Points points)
         {
-            
-            string jsonstring = JsonConvert.SerializeObject(points);
+            string jsonstring = File.ReadAllText("SaveFile.json");
+            List<Points> sorter = JsonConvert.DeserializeObject<List<Points>>(jsonstring);
+            sorter.Add(points);
+            sorter.Sort((x,y) => {
+                if(x._points < y._points)
+                    return 1;
+                else if(x._points > y._points)
+                    return -1;
+                return 0;
+            });
+            sorter.RemoveAt(3);
+            jsonstring = JsonConvert.SerializeObject(sorter);
             File.WriteAllText(@"SaveFile.json", jsonstring);
         }
     }
