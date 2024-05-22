@@ -6,20 +6,22 @@ using Newtonsoft.Json;
 using System.Drawing;
 using Newtonsoft.Json.Serialization;
 
-bool game = true;
+bool game = true;//bool for if the game is still going
 Stopwatch playerSW = new Stopwatch();
 List<Entity> entities = new List<Entity>();
 Player player = new Player();
 entities.Add(new Rat());
-playerSW.Start(); 
+playerSW.Start();//Starts the player attackspeed
 Points points = new Points();
-//string jsonstring = JsonConvert
+Random rnd = new Random();//Random for the enemy spawner
 while (game)
 {
     if(playerSW.Elapsed.Seconds >= player.AttackSpeed) PlayerTurn();
     foreach(Entity entity in entities) entity.CanAttack(player);
 }
-
+/// <summary>
+/// Player chooses what to do
+/// </summary>
 void PlayerTurn(){
     Wait();
     if(entities.Count == 0) game = false;
@@ -36,6 +38,10 @@ void PlayerTurn(){
     }
 }
 
+/// <summary>
+/// Does what the player chose
+/// </summary>
+/// <param name="chose">What choose the player made</param>
 void PlayerMove(int chose)
 {
 
@@ -66,6 +72,8 @@ void PlayerMove(int chose)
             break;
         case 5:
             points.WriteOutTheScoreboard();
+            Console.ReadKey();
+            PlayerTurn();
             break;
         default:
             Console.WriteLine("Pls chose only 1-4");
@@ -77,6 +85,10 @@ void PlayerMove(int chose)
     playerSW.Start();
 }
 
+/// <summary>
+/// Stops enemey attack timer when it's players turn.
+/// </summary>
+/// <param name="Stop">determines if enemy waits</param>
 void Wait(bool stop = true){
     if (stop)
     {
@@ -85,6 +97,9 @@ void Wait(bool stop = true){
     else foreach(Entity entity in entities) entity.Wait(false);
 }
 
+/// <summary>
+/// Choose which enemy to attack.
+/// </summary>
 int Choose()
 {
     Console.WriteLine("Choose one of the enemies");
@@ -94,29 +109,53 @@ int Choose()
     }
     return i;
 }
-
+/// <summary>
+/// Checks if the player or the enemies are dead.
+/// Spawns new enemies if all are dead. 
+/// </summary>
 void Check()
 {
     for (int i = 0; i < entities.Count; i++)
     {
         if(entities[i].Hp <= 0)
         {
+            points.Point += entities[i].Check();
             entities.RemoveAt(i);
-            points.Point += 10;
         }
 
     }
-    if(entities.Count == 0) game = false;
+    if(entities.Count == 0) Spawner();
     if(player.Hp <= 0)
     {
         game = false;
         Console.WriteLine("You Have Died");
     }
 }
+/// <summary>
+/// Spawns random amount of diffrent enemie typs.
+/// </summary>
+void Spawner()
+{
+    for (int i = 0; i < rnd.Next(1, 2); i++)
+    {
+        entities.Add(new Rat());
+        Console.WriteLine("U have encountered a Rat");
+    }
+    for (int i = 0; i < rnd.Next(0, 1); i++)
+    {
+        entities.Add(new Skeleton());
+        Console.WriteLine("U have encountered a Skeleton");
+    }
+    Console.WriteLine("Get Ready for a fight.");
+}
 
+
+/// <summary>
+/// Saves name and score when game ends.
+/// </summary>
 if(!game)
 {
-    string name = null;
+    string? name = null;
     while (name == null) name = Console.ReadLine();
     points.Name = name; 
     points.SaveToScoreboard(points);

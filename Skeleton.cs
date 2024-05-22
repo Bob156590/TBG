@@ -1,15 +1,15 @@
 namespace TBG
 {
-    public class Rat : Entity
+    public class Skeleton : Entity
     {
-        public Rat()
+        public Skeleton()
         {
             Random rnd = new Random();
-            _hp = rnd.Next(1, 10);
-            _dmg = rnd.Next(1, 4);
-            _attackSpeed = rnd.Next(2000, 4000);
-            _name = $"Rat";
-            _points = 5;
+            _hp = rnd.Next(7, 12);
+            _dmg = rnd.Next(5, 7);
+            _attackSpeed = rnd.Next(3000, 5000);
+            _name = $"Skeleton";
+            _points = 15;
         }
         public override void TakeDamge(float dmg)
         {
@@ -20,5 +20,6 @@ namespace TBG
         {
             player.TakeDamge(_dmg, _name);
         }
+        
     }
 }
