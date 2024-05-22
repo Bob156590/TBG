@@ -5,11 +5,15 @@ namespace TBG
     public abstract class Entity : IStats
     {
         protected int _points;//Enemies point worth
-        protected Stopwatch enemySW = new Stopwatch();//Timer for attackspeed
+        protected Stopwatch _enemySW = new Stopwatch();//Timer for attackspeed
         protected string _name;//Name
         protected float _hp;//Enemies Health points
         protected int _dmg;//Enemies Damage
         protected int _attackSpeed;//How fast they attack
+        public int Points
+        {
+            get{ return _points; }
+        }
         public float Hp
         {
             get{ return _hp; }
@@ -38,12 +42,12 @@ namespace TBG
         /// <param name="player">The player/object the enemy attacks</param>
         public void CanAttack(Player player)
         {   
-            enemySW.Start();
-            if (enemySW.ElapsedMilliseconds >= AttackSpeed)
+            _enemySW.Start();
+            if (_enemySW.ElapsedMilliseconds >= AttackSpeed)
             {
                 Attack(player);
-                enemySW.Restart();
-                enemySW.Stop();
+                _enemySW.Restart();
+                _enemySW.Stop();
             }
             //Stopwatch in every class insted of the program class
         }
@@ -52,18 +56,14 @@ namespace TBG
         /// </summary>
         /// <param name="player">Players object</param>
         public abstract void Attack(Player player);
-        public int Check()
-        {
-            return _points;
-        }
         /// <summary>
         /// Stops the enemies time and starts it too
         /// </summary>
-        /// <param name="stop"></param>
+        /// <param name="stop">Decides if clock should start or stop</param>
         public void Wait(bool stop = true)
         {
-            if(stop) enemySW.Stop();
-            if(!stop) enemySW.Start();
+            if(stop) _enemySW.Stop();
+            if(!stop) _enemySW.Start();
         }
     }
 }

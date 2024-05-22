@@ -7,16 +7,14 @@ using System.Drawing;
 using Newtonsoft.Json.Serialization;
 
 bool game = true;//bool for if the game is still going
-Stopwatch playerSW = new Stopwatch();
 List<Entity> entities = new List<Entity>();
 Player player = new Player();
 entities.Add(new Rat());
-playerSW.Start();//Starts the player attackspeed
 Points points = new Points();
 Random rnd = new Random();//Random for the enemy spawner
 while (game)
 {
-    if(playerSW.Elapsed.Seconds >= player.AttackSpeed) PlayerTurn();
+    if(player.playerSW.Elapsed.Seconds >= player.AttackSpeed) PlayerTurn();
     foreach(Entity entity in entities) entity.CanAttack(player);
 }
 /// <summary>
@@ -25,8 +23,8 @@ while (game)
 void PlayerTurn(){
     Wait();
     if(entities.Count == 0) game = false;
-    playerSW.Reset();
-    //enemySW.Stop();
+    
+    player.ClockManagment(2);
     Console.WriteLine("Whats your next move:");
     Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Stats\n5. test");
     try{PlayerMove(int.Parse(Console.ReadLine()));}
@@ -82,7 +80,7 @@ void PlayerMove(int chose)
     }
     Wait(false);
     Check();
-    playerSW.Start();
+    player.ClockManagment(1);
 }
 
 /// <summary>
@@ -119,7 +117,7 @@ void Check()
     {
         if(entities[i].Hp <= 0)
         {
-            points.Point += entities[i].Check();
+            points.Point += entities[i].Points;
             entities.RemoveAt(i);
         }
 
@@ -156,6 +154,7 @@ void Spawner()
 if(!game)
 {
     string? name = null;
+    Console.WriteLine("Pls tell us the name of the fallen hero so it may be saved in the hall of heros.");
     while (name == null) name = Console.ReadLine();
     points.Name = name; 
     points.SaveToScoreboard(points);

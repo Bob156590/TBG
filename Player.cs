@@ -4,6 +4,7 @@ namespace TBG
 {
     public class Player : IStats
     {
+        public Stopwatch playerSW = new Stopwatch();
         private float _hp = 100; //Player health point
         private int _dmg = 10; //Player damage
         private bool _block; //If Player is blocking or not
@@ -32,6 +33,11 @@ namespace TBG
             get{ return _block; }
             set{ _block = value; }
         }
+        /// <summary>
+        /// Player attacks an enemy
+        /// </summary>
+        /// <param name="entity">The enemies object</param>
+        /// <param name="sp">If it's a reguler att attack or a special attack</param>
         public void Attack(Entity entity, bool sp = false)
         {
             if(!sp)entity.Hp -= _dmg;
@@ -42,10 +48,34 @@ namespace TBG
                 return;
             }
         }
-        public virtual void TakeDamge(float dmg, string name)
+        /// <summary>
+        /// Player takes damage from enemy
+        /// </summary>
+        /// <param name="dmg">How much damage the player should take</param>
+        /// <param name="name">The name of the enemy that attacked</param>
+        public virtual void TakeDamge(float dmg, string name, bool bludgeon)
         {
-            _hp -= dmg;
-            Console.WriteLine($"The {name} delt {dmg} to you");
+            Random rnd = new Random();
+            if(!bludgeon)
+            {
+                _hp -= dmg;
+                Console.WriteLine($"The {name} delt {dmg} to you");
+            }
+            else
+            {
+                _hp = dmg;
+                if(rnd.Next(10) == 0)
+                {
+                    playerSW.Restart();
+                    Console.WriteLine("You were hit on the head a little to hard.");
+                }
+            }
+        }
+        public void ClockManagment(int state)
+        {
+            if(state == 0) playerSW.Stop();
+            else if(state == 1) playerSW.Start();
+            else if(state == 2) playerSW.Restart();
         }
     }
 }

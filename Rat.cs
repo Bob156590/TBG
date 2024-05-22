@@ -18,7 +18,7 @@ namespace TBG
         }
         public override void Attack(Player player)
         {
-            player.TakeDamge(_dmg, _name);
+            player.TakeDamge(_dmg, _name, false);
         }
     }
 }
