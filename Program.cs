@@ -9,11 +9,14 @@ using Newtonsoft.Json.Serialization;
 bool game = true;//bool for if the game is still going
 List<Entity> entities = new List<Entity>();
 Player player = new Player();
-entities.Add(new Rat());
 Points points = new Points();
 Random rnd = new Random();//Random for the enemy spawner
+player.AttackManager(1);
+
+//
 while (game)
 {
+    Check();
     if(player.playerSW.Elapsed.Seconds >= player.AttackSpeed) PlayerTurn();
     foreach(Entity entity in entities) entity.CanAttack(player);
 }
@@ -22,42 +25,35 @@ while (game)
 /// </summary>
 void PlayerTurn(){
     Wait();
-    if(entities.Count == 0) game = false;
-    
-    player.ClockManagment(2);
+    player.AttackManager(2);
+    player.AttackManager(0);
     Console.WriteLine("Whats your next move:");
     Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Stats\n5. test");
     try{PlayerMove(int.Parse(Console.ReadLine()));}
     catch
     {
-        //Console.Clear();
+        Console.Clear();
         Console.WriteLine("Du måste skriva något");
         PlayerTurn();
     }
 }
 
 /// <summary>
-/// Does what the player chose
+/// Proceeds to do what the user chose at PlayerTurn
 /// </summary>
 /// <param name="chose">What choose the player made</param>
 void PlayerMove(int chose)
 {
 
-    //Console.Clear();
+    Console.Clear();
     switch(chose){
         case 1:
             Console.WriteLine("Who you gonna attack?");
-            int i = 0;
-            foreach(Entity entity in entities)
-            {
-                i++;
-                Console.Write($"{i}. ");
-                entity.SkrivUt();
-            }
+            
             player.Attack(entities[Choose()-1]);
             break;
         case 2:
-            player.Attack(entities[0], true);
+            player.Attack(entities[Choose()-1], true);
             break;
         case 3:
             player.Block = true;
@@ -65,7 +61,7 @@ void PlayerMove(int chose)
         case 4:
             Console.WriteLine($"Player\nHP: {player.Hp}\nSP: {player.SpecialPoints}\nDmg: {player.Dmg}\nAS: {player.AttackSpeed}");
             Console.ReadKey();
-            //Console.Clear();
+            Console.Clear();
             PlayerTurn();
             break;
         case 5:
@@ -79,8 +75,7 @@ void PlayerMove(int chose)
             break;
     }
     Wait(false);
-    Check();
-    player.ClockManagment(1);
+    player.AttackManager(1);
 }
 
 /// <summary>
@@ -100,12 +95,19 @@ void Wait(bool stop = true){
 /// </summary>
 int Choose()
 {
-    Console.WriteLine("Choose one of the enemies");
-    int i = 10;
-    while(i > entities.Count || i == null){
-        i = int.Parse(Console.ReadLine());
+    int i = 0;
+    foreach(Entity entity in entities)
+    {
+        i++;
+        Console.Write($"{i}. ");
+        entity.SkrivUt();
     }
-    return i;
+    Console.WriteLine("Choose one of the enemies");
+    int j = 10;
+    while(j > entities.Count || j == null){
+        j = int.Parse(Console.ReadLine());
+    }
+    return j;
 }
 /// <summary>
 /// Checks if the player or the enemies are dead.
@@ -134,15 +136,20 @@ void Check()
 /// </summary>
 void Spawner()
 {
-    for (int i = 0; i < rnd.Next(1, 2); i++)
+    for (int i = 0; i < rnd.Next(4); i++)
     {
         entities.Add(new Rat());
         Console.WriteLine("U have encountered a Rat");
     }
-    for (int i = 0; i < rnd.Next(0, 1); i++)
+    for (int i = 0; i < rnd.Next(3); i++)
     {
         entities.Add(new Skeleton());
         Console.WriteLine("U have encountered a Skeleton");
+    }
+    for (int i = 0; i < rnd.Next(2); i++)
+    {
+        entities.Add(new Berserk());
+        Console.WriteLine("U have encountered a Berserker");
     }
     Console.WriteLine("Get Ready for a fight.");
 }

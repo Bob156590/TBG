@@ -14,7 +14,6 @@ namespace TBG
         public float Hp
         {
             get{ return _hp; }
-            set{ _hp = value; }
         }
         public int Dmg 
         {
@@ -53,6 +52,7 @@ namespace TBG
         /// </summary>
         /// <param name="dmg">How much damage the player should take</param>
         /// <param name="name">The name of the enemy that attacked</param>
+        /// <param name="bludgeon">If the attack can stun the player</param>
         public virtual void TakeDamge(float dmg, string name, bool bludgeon)
         {
             Random rnd = new Random();
@@ -71,7 +71,11 @@ namespace TBG
                 }
             }
         }
-        public void ClockManagment(int state)
+        /// <summary>
+        /// Manages when the player attacks and stops.
+        /// </summary>
+        /// <param name="state">State of the timer</param>
+        public void AttackManager(int state)
         {
             if(state == 0) playerSW.Stop();
             else if(state == 1) playerSW.Start();

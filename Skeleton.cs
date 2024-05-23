@@ -2,14 +2,13 @@ namespace TBG
 {
     public class Skeleton : Entity
     {
-        private bool weapon;
         /// <summary>
         /// All the Skeletons stats
         /// </summary>
         public Skeleton()
         { 
             Random rnd = new Random();
-            weapon = rnd.Next(2) == 1;
+            bludgeon = rnd.Next(2) == 1;
             _hp = rnd.Next(7, 12);
             _dmg = rnd.Next(5, 7);
             _attackSpeed = rnd.Next(3000, 5000);
@@ -23,8 +22,8 @@ namespace TBG
         }
         public override void Attack(Player player)
         {
-            if(weapon)player.TakeDamge(_dmg, _name, weapon);
-            else player.TakeDamge(_dmg*.75f, _name, weapon);
+            if(!bludgeon)player.TakeDamge(_dmg, _name, bludgeon);
+            else player.TakeDamge(_dmg*.75f, _name, bludgeon);
         }
         
     }

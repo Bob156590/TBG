@@ -4,6 +4,7 @@ namespace TBG
 {
     public abstract class Entity : IStats
     {
+        protected bool bludgeon;
         protected int _points;//Enemies point worth
         protected Stopwatch _enemySW = new Stopwatch();//Timer for attackspeed
         protected string _name;//Name
