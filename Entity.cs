@@ -52,13 +52,13 @@ namespace TBG
         /// <param name="check"></param>
         public void StatusCheck(int check)
         {
-            if(/*_rnd.Next(101) <= 45 && */check == 1)
+            if(_rnd.Next(101) <= 45 && check == 1)
             {
                 Console.WriteLine("Enemy got burned");
                 _burn = true;
                 _burnTimer += 4;
             }
-            if(/*_rnd.Next(101) <= 55 && */check == 2)
+            if(_rnd.Next(101) <= 55 && check == 2)
             {
                 Console.WriteLine("Enemy got stuned");
                 _enemySW.Restart();

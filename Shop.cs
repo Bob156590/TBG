@@ -5,7 +5,7 @@ namespace TBG
         //Array of the items names.
         private string[] _itemNames = new string[] { "15hp Potion","Random Stat+","Fire Ball", "Frost Bolt"};
         //A 2D/grid Array of the items. It holds the items values. Which in order are: quantity, Sp cost, points cost and value of effect.
-        private int[,] _items = new int[,] { { 0, 0, 10, 15},{ 0, 0, 30, 0}, { 3, 5, 60, 0}, {3, 7, 70, 0}};
+        private int[,] _items = new int[,] { { 0, 0, 10, 15},{ 0, 0, 30, 0}, { 0, 5, 60, 55}, {1, 7, 70, 66}};
         //Sends and returns values for the item.
         public int[] Fireball
         {

@@ -14,7 +14,7 @@ Player player = new Player();//Player object
 Points points = new Points();//point object
 Random _rnd = new Random();//Random for the enemy spawner
 int floor = 0;//Starts timer for player
-
+int floorModifier = 0;//Make the game harder over time
 //Game keeps going untill u lose
 while (game)
 {
@@ -30,7 +30,7 @@ void PlayerTurn(){
     player.AttackManager(2);
     player.AttackManager(0);
     Console.WriteLine("Whats your next move:");
-    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Rest\n5. Stats\n6. test");
+    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Rest\n5. Stats\n6. Scoreboard");
     try{PlayerMove(int.Parse(Console.ReadLine()));}
     catch
     {
@@ -66,12 +66,14 @@ void PlayerMove(int chose)
             break;
         case 5:
             Console.WriteLine($"Player\nHP: {player.Hp}\nSP: {player.SpecialPoints}\nDmg: {player.Dmg}\nAS: {player.AttackSpeed}");
+            Console.WriteLine("Press any button to continue.");
             Console.ReadKey();
             Console.Clear();
             PlayerTurn();
             break;
         case 6:
             points.WriteOutTheScoreboard();
+            Console.WriteLine("Press any button to continue.");
             Console.ReadKey();
             PlayerTurn();
             break;
@@ -154,17 +156,17 @@ void Check()
 void Spawner()
 {
     player.AttackManager(1);
-    for (int i = 0; i < _rnd.Next(4); i++)
+    for (int i = 0; i < _rnd.Next(4 + floorModifier); i++)
     {
         entities.Add(new Rat());
         Console.WriteLine("U have encountered a Rat");
     }
-    for (int i = 0; i < _rnd.Next(3); i++)
+    for (int i = 0; i < _rnd.Next(3 + floorModifier); i++)
     {
         entities.Add(new Skeleton());
         Console.WriteLine("U have encountered a Skeleton");
     }
-    for (int i = 0; i < _rnd.Next(2); i++)
+    for (int i = 0; i < _rnd.Next(2 + floorModifier); i++)
     {
         entities.Add(new Berserk());
         Console.WriteLine("U have encountered a Berserker");
@@ -174,6 +176,7 @@ void Spawner()
         floor++;
         Console.WriteLine("Get Ready for a fight.");
     }
+    if(floor % 3 == 0) floorModifier++;
 }
 
 
