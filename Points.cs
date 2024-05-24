@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace TBG
 {
@@ -34,6 +33,7 @@ namespace TBG
             Points[] temp = JsonConvert.DeserializeObject<Points[]>(jsonstring);
             List<Points> sorter = temp.ToList();
             sorter.Add(points);
+            //Sorter
             sorter.Sort((x,y) => {
                 if(x._totalPoints < y._totalPoints)
                     return 1;

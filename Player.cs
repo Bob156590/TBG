@@ -6,13 +6,13 @@ namespace TBG
     {
         private Random rnd = new Random();
         public Stopwatch playerSW = new Stopwatch();
-        private float _hpMax = 100;
+        private float _hpMax = 100;//Maximum Health a player can have
         private float _hp = 100; //Player health point
         private int _dmg = 15; //Player damage
         private int _attackSpeed = 4000; //How fast the Player attacks
-        private int _specialPointMax = 500;
+        private int _specialPointMax = 500;//Maximum SP a player can have
         private int _specialPoint = 500;//Player can exchange SP to use Special Move™
-        
+        //How to get the 
         public float Hp
         {
             get{ return _hp; }

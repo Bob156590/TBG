@@ -53,14 +53,13 @@ namespace TBG
         /// <returns></returns>
         public int ShopMenu(int points, Player player)
         {
-            Console.WriteLine($"You have {points} points.\nWhat would you like to buy?\nType the number of the item in to buy it.");
-            
             int chose = 0;
-
+            Console.Clear();
             while (true)
             {
                 while (true)
                 {
+                    Console.WriteLine($"You have {points} points.\nWhat would you like to buy?\nType the number of the item in to buy it or 0 if you don't want anything.");
                     int i = 0;
                     foreach (string n in _itemNames)
                     {
@@ -81,6 +80,7 @@ namespace TBG
                             throw new Exception("Input cannot be empty. Please try again.");
                         }
                         chose = int.Parse(input);
+                        if(chose != 0) Buy(chose, points, player);
                         break;
                     }
                     catch(Exception ex)
@@ -91,12 +91,11 @@ namespace TBG
                         Console.Clear();
                     }
                 }
-                if (chose > 0 && chose <= _itemNames.Length)
+                if (chose == 0)
                 {
                     break;
                 }
             }
-            Buy(chose, points, player);
             return points;
         }
         /// <summary>
@@ -110,7 +109,8 @@ namespace TBG
         {
             if(points < _items[chose -1, 2])
             {
-                Console.WriteLine("You don't have enough points to buy this.\n Goodbye.");
+                Console.Clear();
+                Console.WriteLine("You don't have enough points to buy this.");
                 return points;
             }
             else

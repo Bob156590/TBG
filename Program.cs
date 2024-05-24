@@ -1,10 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using System.Linq.Expressions;
-using TBG;
-using Newtonsoft.Json;
-using System.Drawing;
-using Newtonsoft.Json.Serialization;
+﻿using TBG;
 
 bool game = true;//Bool for if the game is still going
 List<Entity> entities = new List<Entity>();//List of enemy objects
@@ -178,7 +172,7 @@ void Spawner()
 
 
 /// <summary>
-/// Saves name and score when game ends.
+/// Saves name, last floor and score when game ends.
 /// </summary>
 if(!game)
 {
