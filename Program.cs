@@ -30,7 +30,7 @@ void PlayerTurn(){
     player.AttackManager(2);
     player.AttackManager(0);
     Console.WriteLine("Whats your next move:");
-    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Rest\n5. Stats\n6. Scoreboard");
+    Console.WriteLine("1. Attack\n2. Special\n3. Rest\n4. Stats\n5. Scoreboard");
     try{PlayerMove(int.Parse(Console.ReadLine()));}
     catch
     {
@@ -59,19 +59,16 @@ void PlayerMove(int chose)
             PlayerTurn();
             break;
         case 3:
-            player.Block = true;
-            break;
-        case 4:
             player.Rest();
             break;
-        case 5:
+        case 4:
             Console.WriteLine($"Player\nHP: {player.Hp}\nSP: {player.SpecialPoints}\nDmg: {player.Dmg}\nAS: {player.AttackSpeed}");
             Console.WriteLine("Press any button to continue.");
             Console.ReadKey();
             Console.Clear();
             PlayerTurn();
             break;
-        case 6:
+        case 5:
             points.WriteOutTheScoreboard();
             Console.WriteLine("Press any button to continue.");
             Console.ReadKey();

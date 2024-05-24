@@ -9,7 +9,6 @@ namespace TBG
         private float _hpMax = 100;
         private float _hp = 100; //Player health point
         private int _dmg = 15; //Player damage
-        private bool _block; //If Player is blocking or not
         private int _attackSpeed = 4000; //How fast the Player attacks
         private int _specialPointMax = 500;
         private int _specialPoint = 500;//Player can exchange SP to use Special Move™
@@ -29,11 +28,6 @@ namespace TBG
         public int SpecialPoints
         {
             get{ return _specialPoint; }
-        }
-        public bool Block
-        {
-            get{ return _block; }
-            set{ _block = value; }
         }
         /// <summary>
         /// Player attacks an enemy
