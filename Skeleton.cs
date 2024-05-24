@@ -7,23 +7,17 @@ namespace TBG
         /// </summary>
         public Skeleton()
         { 
-            Random rnd = new Random();
-            bludgeon = rnd.Next(2) == 1;
-            _hp = rnd.Next(7, 12);
-            _dmg = rnd.Next(5, 7);
-            _attackSpeed = rnd.Next(3000, 5000);
+            _bludgeon = _rnd.Next(2) == 1;
+            _hp = _rnd.Next(20, 30);
+            _dmg = _rnd.Next(5, 7);
+            _attackSpeed = _rnd.Next(3000, 5000);
             _name = $"Skeleton";
-            _points = 15;
-        }
-        public override void TakeDamge(float dmg)
-        {
-            _hp -= dmg;
-            Console.WriteLine($"You hit {_name} for {_dmg}");
+            _points = 25;
         }
         public override void Attack(Player player)
         {
-            if(!bludgeon)player.TakeDamge(_dmg, _name, bludgeon);
-            else player.TakeDamge(_dmg*.75f, _name, bludgeon);
+            if(!_bludgeon)player.TakeDamge(_dmg, _name, _bludgeon);
+            else player.TakeDamge(_dmg*.75f, _name, _bludgeon);
         }
         
     }

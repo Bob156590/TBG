@@ -6,11 +6,18 @@ namespace TBG
     public class Points
     {
         private int _totalPoints;//Total points of the player
-        private string _name;//Saved name
+        private string _name;//Players username
+        private int _floor;//Floor they died on
+        
         public string Name
         {
             get { return _name; }
             set { _name = value; }
+        }
+        public int Floor
+        {
+            get { return _floor; }
+            set { _floor = value; }
         }
         public int Point
         {
@@ -45,7 +52,7 @@ namespace TBG
         {
             string jsonstring = File.ReadAllText("SaveFile.json");
             Points[] temp = JsonConvert.DeserializeObject<Points[]>(jsonstring);
-            foreach (Points point in temp) Console.WriteLine($"Name: {point.Name}\nPoints: {point.Point}");
+            foreach (Points point in temp) Console.WriteLine($"Name: {point.Name}\nPoints: {point.Point}\nFloor: {point.Floor}");
         }
     }
 }

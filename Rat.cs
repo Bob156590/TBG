@@ -4,22 +4,16 @@ namespace TBG
     {
         public Rat()
         {
-            Random rnd = new Random();
-            _hp = rnd.Next(1, 10);
-            _dmg = rnd.Next(1, 4);
-            _attackSpeed = rnd.Next(2000, 4000);
+            _hp = _rnd.Next(12, 16);
+            _dmg = _rnd.Next(5, 6);
+            _attackSpeed = _rnd.Next(2000, 4000);
             _name = $"Rat";
-            _points = 5;
-            bludgeon = true;
+            _points = 15;
+            _bludgeon = false;
         }
         public override void Attack(Player player)
         {
             player.TakeDamge(_dmg, _name, false);
-        }
-        public override void TakeDamge(float dmg)
-        {
-            _hp -= dmg;
-            Console.WriteLine($"You hit {_name} for {_dmg}");
         }
     }
 }

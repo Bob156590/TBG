@@ -6,18 +6,20 @@ using Newtonsoft.Json;
 using System.Drawing;
 using Newtonsoft.Json.Serialization;
 
-bool game = true;//bool for if the game is still going
-List<Entity> entities = new List<Entity>();
-Player player = new Player();
-Points points = new Points();
-Random rnd = new Random();//Random for the enemy spawner
-player.AttackManager(1);
+bool game = true;//Bool for if the game is still going
+List<Entity> entities = new List<Entity>();//List of enemy objects
+//Objects of classes
+Shop shop = new Shop();
+Player player = new Player();//Player object
+Points points = new Points();//point object
+Random _rnd = new Random();//Random for the enemy spawner
+int floor = 0;//Starts timer for player
 
-//
+//Game keeps going untill u lose
 while (game)
 {
     Check();
-    if(player.playerSW.Elapsed.Seconds >= player.AttackSpeed) PlayerTurn();
+    if(player.playerSW.ElapsedMilliseconds >= player.AttackSpeed) PlayerTurn();
     foreach(Entity entity in entities) entity.CanAttack(player);
 }
 /// <summary>
@@ -28,12 +30,12 @@ void PlayerTurn(){
     player.AttackManager(2);
     player.AttackManager(0);
     Console.WriteLine("Whats your next move:");
-    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Stats\n5. test");
+    Console.WriteLine("1. Attack\n2. Special\n3. Block\n4. Rest\n5. Stats\n6. test");
     try{PlayerMove(int.Parse(Console.ReadLine()));}
     catch
     {
         Console.Clear();
-        Console.WriteLine("Du måste skriva något");
+        Console.WriteLine("You must write something");
         PlayerTurn();
     }
 }
@@ -53,18 +55,22 @@ void PlayerMove(int chose)
             player.Attack(entities[Choose()-1]);
             break;
         case 2:
-            player.Attack(entities[Choose()-1], true);
+            player.SpecialAttack(entities[Choose()-1], shop);
+            PlayerTurn();
             break;
         case 3:
             player.Block = true;
             break;
         case 4:
+            player.Rest();
+            break;
+        case 5:
             Console.WriteLine($"Player\nHP: {player.Hp}\nSP: {player.SpecialPoints}\nDmg: {player.Dmg}\nAS: {player.AttackSpeed}");
             Console.ReadKey();
             Console.Clear();
             PlayerTurn();
             break;
-        case 5:
+        case 6:
             points.WriteOutTheScoreboard();
             Console.ReadKey();
             PlayerTurn();
@@ -111,7 +117,7 @@ int Choose()
 }
 /// <summary>
 /// Checks if the player or the enemies are dead.
-/// Spawns new enemies if all are dead. 
+/// Spawns new enemies if all are dead.
 /// </summary>
 void Check()
 {
@@ -124,7 +130,18 @@ void Check()
         }
 
     }
-    if(entities.Count == 0) Spawner();
+    if(entities.Count == 0)
+    {
+        if(floor > 0)
+        {
+            player.AttackManager(2);
+            player.AttackManager(0);
+            Console.WriteLine("Would you like to go to the shop?\nWrite 1 if yes and write anything else if no.");
+            string? goShop = Console.ReadLine();
+            if(goShop == "1") points.Point = shop.ShopMenu(points.Point, player);
+        }
+        Spawner();
+    }
     if(player.Hp <= 0)
     {
         game = false;
@@ -132,26 +149,31 @@ void Check()
     }
 }
 /// <summary>
-/// Spawns random amount of diffrent enemie typs.
+/// Spawns random amount of diffrent enemie typs. And keeps track of the floor/round
 /// </summary>
 void Spawner()
 {
-    for (int i = 0; i < rnd.Next(4); i++)
+    player.AttackManager(1);
+    for (int i = 0; i < _rnd.Next(4); i++)
     {
         entities.Add(new Rat());
         Console.WriteLine("U have encountered a Rat");
     }
-    for (int i = 0; i < rnd.Next(3); i++)
+    for (int i = 0; i < _rnd.Next(3); i++)
     {
         entities.Add(new Skeleton());
         Console.WriteLine("U have encountered a Skeleton");
     }
-    for (int i = 0; i < rnd.Next(2); i++)
+    for (int i = 0; i < _rnd.Next(2); i++)
     {
         entities.Add(new Berserk());
         Console.WriteLine("U have encountered a Berserker");
     }
-    Console.WriteLine("Get Ready for a fight.");
+    if(entities.Count > 0)
+    {
+        floor++;
+        Console.WriteLine("Get Ready for a fight.");
+    }
 }
 
 
@@ -163,7 +185,8 @@ if(!game)
     string? name = null;
     Console.WriteLine("Pls tell us the name of the fallen hero so it may be saved in the hall of heros.");
     while (name == null) name = Console.ReadLine();
-    points.Name = name; 
+    points.Name = name;
+    points.Floor = floor;
     points.SaveToScoreboard(points);
     Console.WriteLine($"Game Over\nPoints: {points.Point}");
 }
